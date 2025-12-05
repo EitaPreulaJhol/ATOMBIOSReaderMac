@@ -10,7 +10,7 @@ Basicamente uma adaptação do ATOMBIOSReader original, porém funcional no macO
 
 
 **Como compilar:**
-Use o comando abaido para compilar o projeto:
+Use o comando abaixo para compilar o projeto:
 
 ```bash
 clang++ -o atombios_reader main.cpp -std=c++17
