@@ -18,6 +18,7 @@ clang++ -o atombios_reader main.cpp -std=c++17
 ```
 
 **Como utilizar:**
+
 O executável espera como argumento o caminho para um arquivo vBIOS (.rom).
 Aqui segue um exemplo de execução (enviando a saída para um arquivo de texto):
 
