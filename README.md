@@ -2,7 +2,7 @@
 # ATOMBIOSReaderMac
 Parser simples das vBIOS ATOM, que extrai e lista os offsets e tamanhos
 das tabelas de comando e de dados presentes num arquivo ROM (normalmente extraído via GPU-Z).
-Basicamente uma adaptação do ATOMBIOSReader original, porém funcional no macOS (não testado em Linux).
+Basicamente uma adaptação do [ATOMBIOSReader](https://github.com/kizwan/ATOMBIOSReader), funcional no macOS (não testado no Linux).
 
 
 **Requisitos**
