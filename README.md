@@ -5,11 +5,12 @@ das tabelas de comando e de dados presentes num arquivo ROM (normalmente extraí
 Basicamente uma adaptação do [ATOMBIOSReader](https://github.com/kizwan/ATOMBIOSReader), funcional no macOS (não testado no Linux).
 
 
-**Requisitos**
+**Requisitos:**
 - Compilador C++ com suporte a C++17 (por exemplo `clang++`).
 
 
 **Como compilar:**
+
 Use o comando abaixo para compilar o projeto:
 
 ```bash
