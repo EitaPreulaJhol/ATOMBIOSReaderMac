@@ -6,6 +6,7 @@ Basicamente uma adaptação do [ATOMBIOSReader](https://github.com/kizwan/ATOMBI
 
 
 **Requisitos:**
+
 - Compilador C++ com suporte a C++17 (por exemplo `clang++`).
 
 
@@ -34,5 +35,8 @@ O dump final será salvo com o nome da função, em um arquivo .txt:
 ```
 
 Extremamente útil para dumpar a tabela do PowerPlay e injetarmos via Opencore, para termos mais controle sobre a curva das fans no macOS.
+
+**Créditos:**
+Autor original da ferramenta ATOMBIOSReader - [kizwan](https://github.com/kizwan)
 
 
