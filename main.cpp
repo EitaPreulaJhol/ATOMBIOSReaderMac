@@ -261,6 +261,57 @@ void printReportLine(int index, uint16_t offset, const std::string& tableName, s
     }
 }
 
+// Helper para dumpar as tabelas de acordo com seus nomes:
+void dumpHexTable(std::ifstream& file, uint16_t offset, uint16_t size, const std::string& name) {
+    if (offset == 0 || size == 0) return;
+
+    // Cria arquivo .txt com o nome da Data Table:
+    std::ofstream out(name + ".txt");
+    if (!out) {
+        std::cerr << "Erro ao salvar tabela: " << name << std::endl;
+        return;
+    }
+
+    std::vector<uint8_t> buffer(size);
+    file.seekg(offset, std::ios::beg);
+    file.read(reinterpret_cast<char*>(buffer.data()), size);
+
+    // Escreve em hexadecimal
+    for (size_t i = 0; i < buffer.size(); i++) {
+        if (i % 16 == 0) out << std::endl;
+        out << std::hex << std::setw(2) << std::setfill('0') << (int)buffer[i] << " ";
+    }
+
+    out << std::endl;
+    out.close();
+}
+
+// Helper para extrair as tabelas em formato hexadecimal, de acordo com seus offsets:
+void extractAllHexDataTables(std::ifstream& file, _ATOM_MASTER_DATA_TABLE& dataTable) {
+
+    uint16_t* pDataOffsets = reinterpret_cast<uint16_t*>(&dataTable.ListOfDataTables);
+    int numDataTables = sizeof(_ATOM_MASTER_LIST_OF_DATA_TABLES) / sizeof(uint16_t);
+
+    for (int i = 0; i < numDataTables; i++) {
+        uint16_t offset = pDataOffsets[i];
+
+        if (offset == 0 || i >= INDEX_DATA_TABLE.size())
+            continue;
+
+        uint16_t size = readUShort(file, offset);
+        std::string filename = INDEX_DATA_TABLE[i];
+
+        // Remove caracteres inválidos para nome de arquivo
+        for (auto& c : filename) {
+            if (c == '/' || c == '\\' || c == ':') c = '_';
+        }
+
+        dumpHexTable(file, offset, size, filename);
+        std::cout << "Salvo: " << filename << ".txt (Offset 0x" 
+                  << std::hex << offset << ", Size " << size << ")" << std::endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Uso:" << argv[0] << " <vbios.rom > vbios.txt" << std::endl;
@@ -334,6 +385,18 @@ int main(int argc, char* argv[]) {
          if (i < INDEX_DATA_TABLE.size()) {
             printReportLine(i, pDataOffsets[i], INDEX_DATA_TABLE[i], file, true);
         }
+    }
+
+    // Se o usuário passou a flag --hex, fazemos o dump das tabelas
+    bool dumpHex = false;
+    if (argc >= 3 && std::string(argv[2]) == "--hex") {
+        dumpHex = true;
+    }
+
+    if (dumpHex) {
+        std::cout << "\nExtraindo Data Tables em hexadecimal..." << std::endl;
+        extractAllHexDataTables(file, dataTable);
+        std::cout << "Concluído!" << std::endl;
     }
 
     return 0;
