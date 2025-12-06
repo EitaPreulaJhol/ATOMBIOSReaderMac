@@ -14,17 +14,25 @@ Basicamente uma adaptação do [ATOMBIOSReader](https://github.com/kizwan/ATOMBI
 Use o comando abaixo para compilar o projeto:
 
 ```bash
-clang++ -o atombios_reader main.cpp -std=c++17
+clang++ -o atombiosreadermac main.cpp -std=c++17
 ```
 
 **Como utilizar:**
 
 O executável espera como argumento o caminho para um arquivo vBIOS (.rom).
-Aqui segue um exemplo de execução (enviando a saída para um arquivo de texto):
+Aqui segue um exemplo de execução (enviando a saída para o console):
 
 ```bash
-./atombios_reader vbios.rom > vbios.txt
+./atombiosreadermac vbios.rom
 ```
 
-Podemos também executá-lo sem argumentos, sendo exibindo os resultados do arquivo processado no console.
+Caso precise de um dump de cada tabela de dados (Data Table) encontrada na ROM, adicione um `--hex` ao final do prompt.
+O dump final será salvo com o nome da função, em um arquivo .txt:
+
+```bash
+./atombiosreadermac vbios.rom --hex
+```
+
+Extremamente útil para dumpar a tabela do PowerPlay e injetarmos via Opencore, para termos mais controle sobre a curva das fans no macOS.
+
 
